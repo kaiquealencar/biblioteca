@@ -16,7 +16,7 @@ class UserService:
         return user
     
     @staticmethod
-    def upate(id, usuario=None, email=None, senha=None):
+    def update(id, usuario=None, email=None, senha=None):
         
         user = User.query.get(id)        
         if not user:

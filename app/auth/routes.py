@@ -9,7 +9,7 @@ def login():
    return render_template("auth/login.html")
 
 
-@usuario_bp.route("/cadastro-usuario", methods=["POST", "GET"])
+@usuario_bp.route("/cadastrar-usuario", methods=["POST", "GET"])
 def cadastrar_usuario():
    if request.method == "POST":
       usuario = request.form.get("usuario")
@@ -19,7 +19,7 @@ def cadastrar_usuario():
       flash("Usuário cadastrado com sucesso!")
 
 
-      return redirect(url_for("usuarios.cadastro_usuario"))
+      return redirect(url_for("usuarios.cadastrar_usuario"))
    
 
    users = User.query.all()   
@@ -36,7 +36,7 @@ def atualizar_usuario(id):
       usuario = request.form.get("usuario")
       email = request.form.get("email")
       senha = request.form.get("senha")
-      user = UserService.upate(id, usuario=usuario, email=email, senha=senha)
+      user = UserService.update(id, usuario=usuario, email=email, senha=senha)
       return redirect(url_for("usuarios.cadastrar_usuario"))
 
    return render_template("auth/usuario_form.html", usuario=user, users=User.query.all())
@@ -48,7 +48,7 @@ def deletar_usuario(id):
    if not delete_user:
       flash("Usuário não encontrado ou já excluído.", "error")
    else:
-      flash("Usuário não encontrado ou já excluído.", "error")
+       flash("Usuário excluído com sucesso!")
    
    return redirect(url_for("usuarios.cadastrar_usuario"))
    

@@ -4,6 +4,10 @@
 {% block title %}
 {{ 'Editar Usuário' if usuario else 'Cadastro de Usuário' }}
 {% endblock %}
+{% block css_page %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+{% endblock %}
+
 
 {% block header %}
 Área do Usuário
