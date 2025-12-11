@@ -8,13 +8,12 @@
   {% block css_page %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
-
   {% if show_back_button %}
     <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
   {% endif %}
 
   {% block content %}{% endblock %}
 
-  
+  {% block full_width %}{% endblock %}
 </body>
 </html>
