@@ -373,6 +373,36 @@ input:focus {
   border: 1px solid #cbd5e1;
 }
 
+.btn-editar {
+  background: #2563eb; /* azul */
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-editar:hover {
+  background: #1d4ed8;
+}
+
+.btn-excluir {
+  background: #ef4444; /* vermelho */
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-excluir:hover {
+  background: #b91c1c;
+}
+
 .btn-ghost:hover {
   background: #e2e8f0;
 }

@@ -15,19 +15,19 @@
     </header>
 
     <main>
-    <form class="user-form" id="registerForm">
+    <form class="user-form"  method="POST" id="registerForm" action="{{ url_for('usuarios.cadastro_usuario') }}">
         <h2>Cadastro</h2>
         <div class="full">
           <label for="registerUser">Usuário</label>
-          <input type="text" id="registerUser" placeholder="Digite seu usuário">
+          <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário">
         </div>
         <div class="full">
           <label for="registerEmail">E-mail</label>
-          <input type="email" id="registerEmail" placeholder="Digite seu e-mail">
+          <input type="email" id="email" name="email" placeholder="Digite seu e-mail">
         </div>
         <div class="full">
           <label for="registerPassword">Senha</label>
-          <input type="password" id="registerPassword" placeholder="Digite sua senha">
+          <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
         </div>
         <div class="actions">
           <button type="submit" class="btn btn-primary">Salvar</button>
@@ -40,29 +40,22 @@
     <h2>Usuários Cadastrados</h2>
     <table class="user-table">
       <thead>
-        <tr>
-          <th>Usuário</th>
-          <th>E-mail</th>
-          <th>Ações</th>
-        </tr>
+        <th>Usuário</th>
+        <th>E-mail</th>
+        <th>Ações</th>
+
       </thead>
       <tbody>
-        <tr>
-          <td>João</td>
-          <td>joao@email.com</td>
-          <td>
-            <button class="btn btn-ghost">Editar</button>
-            <button class="btn btn-ghost">Excluir</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Maria</td>
-          <td>maria@email.com</td>
-          <td>
-            <button class="btn btn-ghost">Editar</button>
-            <button class="btn btn-ghost">Excluir</button>
-          </td>
-        </tr>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.usuario }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-excluir">Excluir</button>
+            </td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   </section>
