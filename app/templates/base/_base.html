@@ -11,7 +11,9 @@
 <body>
 
 <body>
-  <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
+  {% if show_back_button %}
+    <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
+  {% endif %}
 
 
   <div class="container">
