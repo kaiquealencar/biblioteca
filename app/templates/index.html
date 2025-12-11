@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Início</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+      <span>Sistema de Biblioteca</span>
+    </div>
+    <nav>
+      <a href="/">Início</a>
+      <a href="/livros">Livros</a>
+      <a href="{{url_for('livros.cadastrar_livro')}}">Cadastrar Livro</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1>Bem-vindo</h1>
+    <p class="subtitle">Gerencie sua biblioteca com organização e rapidez.</p>
+
+    <div class="hero-actions">
+      <a class="btn-primary" href="{{url_for('livros.cadastrar_livro')}}">Cadastrar novo livro</a>
+      <a class="btn-secondary" href="/livros">Ver coleção</a>
+    </div>
+  </main>
+
+</body>
+</html>
