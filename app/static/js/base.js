@@ -47,14 +47,12 @@ const form = document.getElementById('bookForm');
 
     function handleSubmit(e){
       e.preventDefault();
-      // coletar dados do formulário
       const data = new FormData(form);
       const obj = {};
       data.forEach((v,k) => {
         obj[k] = v;
       });
 
-      // Exemplo: substituir por envio via fetch para sua API
       console.log('Dados do livro:', obj);
       alert('Livro salvo (simulação). Abra o console para ver o objeto gerado.');
       form.reset();
