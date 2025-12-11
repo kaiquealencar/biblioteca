@@ -1,21 +1,25 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from .extensions import db
-from .models import book
+from .extensions import db, migrate
 
-db = SQLAlchemy()
 
 def create_app(config_object= "config.Config"):
     app = Flask(__name__)
     app.config.from_object(config_object)
 
-    from .livros.routes import livros_bp
-    app.register_blueprint(livros_bp)
-
     from .routes import main_bp
     app.register_blueprint(main_bp)
 
+    from .livros.routes import livros_bp
+    app.register_blueprint(livros_bp)
+
+    from .auth.routes import usuario_bp
+    app.register_blueprint(usuario_bp)
+
+    from app.models import User
+    
     db.init_app(app)
+    migrate.init_app(app, db)
 
     return app

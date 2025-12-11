@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Cadastro</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">LB</div>
+      <h1>Área do Usuário</h1>
+    </header>
+
+    <main>
+    <form class="user-form" id="registerForm">
+        <h2>Cadastro</h2>
+        <div class="full">
+          <label for="registerUser">Usuário</label>
+          <input type="text" id="registerUser" placeholder="Digite seu usuário">
+        </div>
+        <div class="full">
+          <label for="registerEmail">E-mail</label>
+          <input type="email" id="registerEmail" placeholder="Digite seu e-mail">
+        </div>
+        <div class="full">
+          <label for="registerPassword">Senha</label>
+          <input type="password" id="registerPassword" placeholder="Digite sua senha">
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="reset" class="btn btn-ghost">Cancelar</button>
+        </div>
+      </form>   
+     </main>
+  </div>
+  <section class="user-table-section">
+    <h2>Usuários Cadastrados</h2>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Usuário</th>
+          <th>E-mail</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>João</td>
+          <td>joao@email.com</td>
+          <td>
+            <button class="btn btn-ghost">Editar</button>
+            <button class="btn btn-ghost">Excluir</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Maria</td>
+          <td>maria@email.com</td>
+          <td>
+            <button class="btn btn-ghost">Editar</button>
+            <button class="btn btn-ghost">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</body>
+</html>
