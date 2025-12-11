@@ -3,32 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Livraria</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/livro.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-</head>
-<body>
+  <title>{% block title %}Livraria{% endblock %}</title>
 
-<body>
+  {% block css_page %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
   {% if show_back_button %}
     <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
   {% endif %}
 
+  {% block content %}{% endblock %}
 
-  <div class="container">
-    <header>
-      <div class="logo">LB</div>
-      <h1>{% block header %}Área do Usuário{% endblock %}</h1>
-    </header>
-    <main>
-      {% block content %}{% endblock %}
-    </main>
-  </div>
-
-  {% block full_width %}{% endblock %}
-
-  <footer>
-    <p>© 2025 Minha Biblioteca</p>
-  </footer>
+  
 </body>
+</html>
