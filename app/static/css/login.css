@@ -137,7 +137,6 @@ input:focus {
   }
 }
 
-/* Reset e estilo base já vem do CSS principal */
 
 body {
   background: #f4f7fa;
@@ -147,10 +146,9 @@ body {
   min-height: 100vh;
 }
 
-/* Container menor para login */
 .container {
   width: 100%;
-  max-width: 400px; /* menor que o container principal */
+  max-width: 400px; 
   background: #ffffff;
   padding: 30px;
   border-radius: 16px;
@@ -177,7 +175,6 @@ header h1 {
   font-size: 24px;
 }
 
-/* Formulário de login */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -249,7 +246,6 @@ header h1 {
   background: #e2e8f0;
 }
 
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -261,13 +257,12 @@ body {
   background: #f4f7fa;
   color: #1a1a1a;
   display: flex;
-  flex-direction: column; /* importante para que container e tabela fiquem em coluna */
+  flex-direction: column; 
   align-items: center;
   min-height: 100vh;
   padding: 20px 0;
 }
 
-/* Container do formulário */
 .container {
   width: 100%;
   max-width: 500px;
@@ -280,7 +275,6 @@ body {
   gap: 30px;
 }
 
-/* Header */
 header {
   display: flex;
   align-items: center;
@@ -347,7 +341,7 @@ input:focus {
 .actions {
   display: flex;
   gap: 10px;
-  justify-content: center; /* centraliza os botões */
+  justify-content: center; 
 }
 
 .btn {
@@ -374,7 +368,7 @@ input:focus {
 }
 
 .btn-editar {
-  background: #2563eb; /* azul */
+  background: #2563eb; 
   color: white;
   border: none;
   padding: 6px 10px;
@@ -389,7 +383,7 @@ input:focus {
 }
 
 .btn-excluir {
-  background: #ef4444; /* vermelho */
+  background: #ef4444;
   color: white;
   border: none;
   padding: 6px 10px;
@@ -407,10 +401,26 @@ input:focus {
   background: #e2e8f0;
 }
 
-/* Tabela de usuários fora do container */
+.btn-voltar-canto {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background-color: #7c3aed;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-voltar-canto:hover {
+    background-color: #5b21b6;
+}
+
 .user-table-section {
   width: 100%;
-  max-width: 1200px; /* largura máxima da tabela */
+  max-width: 1200px;
   margin-top: 30px;
   padding: 20px;
   background: #f4f7fa;
@@ -421,7 +431,7 @@ input:focus {
   font-weight: 700;
   margin-bottom: 15px;
   color: #0f172a;
-  text-align: center; /* opcional */
+  text-align: center; 
 }
 
 .user-table {

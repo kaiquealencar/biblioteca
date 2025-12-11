@@ -1,0 +1,74 @@
+{% extends "base/_base.html" %}
+
+{% block title %}
+{{ 'Editar Usuário' if usuario else 'Cadastro de Usuário' }}
+{% endblock %}
+
+{% block header %}
+Área do Usuário
+{% endblock %}
+
+{% block content %}
+<form class="user-form" method="POST" id="registerForm"
+      action="{{ url_for('usuarios.atualizar_usuario', id=usuario.id) if usuario else url_for('usuarios.cadastrar_usuario') }}">
+  <h2>{{ 'Editar Usuário' if usuario else 'Cadastro' }}</h2>
+
+  <div class="full">
+    <label for="registerUser">Usuário</label>
+    <input type="text" id="usuario" name="usuario"
+           placeholder="Digite seu usuário"
+           value="{{ usuario.usuario if usuario else '' }}" required>
+  </div>
+
+  <div class="full">
+    <label for="registerEmail">E-mail</label>
+    <input type="email" id="email" name="email"
+           placeholder="Digite seu e-mail"
+           value="{{ usuario.email if usuario else '' }}" required>
+  </div>
+
+  <div class="full">
+    <label for="registerPassword">Senha</label>
+    <input type="password" id="senha" name="senha"
+           placeholder="{{ 'Deixe vazio para não alterar' if usuario else 'Digite sua senha' }}">
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="btn btn-primary">
+      {{ 'Salvar Alterações' if usuario else 'Cadastrar' }}
+    </button>
+    <button type="button" class="btn btn-ghost"
+            onclick="window.location.href='{{ url_for('usuarios.cadastrar_usuario') }}'">
+      Cancelar
+    </button>
+  </div>
+</form>
+{% endblock %}
+{% block full_width %}
+<section class="user-table-section">
+  <h2>Usuários Cadastrados</h2>
+  <table class="user-table">
+    <thead>
+      <th>Usuário</th>
+      <th>E-mail</th>
+      <th>Ações</th>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.usuario }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <form method="GET" action="{{ url_for('usuarios.atualizar_usuario', id=user.id) }}" style="display:inline;">
+              <button type="submit" class="btn-editar">Editar</button>
+            </form>
+            <form method="POST" action="{{ url_for('usuarios.deletar_usuario', id=user.id) }}" style="display:inline;">
+              <button type="submit" class="btn-excluir">Excluir</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
