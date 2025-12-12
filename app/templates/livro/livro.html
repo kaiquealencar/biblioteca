@@ -16,16 +16,16 @@
     <h1>Cadastro de Livros</h1>
   </header>
 
-  <form id="bookForm" onsubmit="handleSubmit(event)">
+  <form id="bookForm"  enctype="multipart/form-data" method="POST">
 
     <div class="row">
       <div>
-        <label for="title">Título</label>
-        <input id="title" name="title" class="input" required placeholder="Ex: O Pequeno Príncipe" />
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" class="input" required placeholder="Ex: O Pequeno Príncipe" />
       </div>
       <div>
-        <label for="author">Autor</label>
-        <input id="author" name="author" class="input" required placeholder="Ex: Antoine de Saint-Exupéry" />
+        <label for="autor">Autor</label>
+        <input id="autor" name="autor" class="input" required placeholder="Ex: Antoine de Saint-Exupéry" />
       </div>
     </div>
 
@@ -35,26 +35,26 @@
         <input id="isbn" name="isbn" class="input" placeholder="978-85-..." />
       </div>
       <div>
-        <label for="publisher">Editora</label>
-        <input id="publisher" name="publisher" class="input" placeholder="Ex: Companhia das Letras" />
+        <label for="editora">Editora</label>
+        <input id="editora" name="editora" class="input" placeholder="Ex: Companhia das Letras" />
       </div>
     </div>
 
     <div class="row">
       <div>
-        <label for="year">Ano de Publicação</label>
-        <input id="year" name="year" type="number" min="1000" max="2099" class="input" placeholder="2021" />
+        <label for="ano_pub">Ano de Publicação</label>
+        <input id="ano_pub" name="ano_pub" type="number" min="1000" max="2099" class="input" placeholder="2021" />
       </div>
       <div>
-        <label for="pages">Páginas</label>
-        <input id="pages" name="pages" type="number" min="1" class="input" placeholder="240" />
+        <label for="paginas">Páginas</label>
+        <input id="paginas" name="paginas" type="number" min="1" class="input" placeholder="240" />
       </div>
     </div>
 
     <div class="row">
       <div>
-        <label for="genre">Gênero</label>
-        <select id="genre" name="genre" class="input">
+        <label for="genero">Gênero</label>
+        <select id="genero" name="genero" class="input">
           <option value="">-- selecione --</option>
           <option>Ficção</option>
           <option>Não-ficção</option>
@@ -66,8 +66,8 @@
         </select>
       </div>
       <div>
-        <label for="format">Formato</label>
-        <select id="format" name="format" class="input">
+        <label for="formato">Formato</label>
+        <select id="formato" name="formato" class="input">
           <option value="">-- selecione --</option>
           <option>Paperback</option>
           <option>Hardcover</option>
@@ -78,25 +78,25 @@
     </div>
 
     <div class="full">
-      <label for="language">Idioma</label>
-      <input id="language" name="language" class="input" placeholder="Português (Brasil)" />
+      <label for="idioma">Idioma</label>
+      <input id="idioma" name="idioma" class="input" placeholder="Português (Brasil)" />
     </div>
 
     <div class="full">
-      <label for="description">Descrição</label>
-      <textarea id="description" name="description" class="input" placeholder="Breve sinopse ou observações..."></textarea>
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" name="descricao" class="input" placeholder="Breve sinopse ou observações..."></textarea>
     </div>
 
     <div class="row">
       <div>
         <label>Tags</label>
-        <input id="tags" name="tags" class="input" placeholder="separe por vírgula: fantasia, jovem, aventura" />
+        <input id="tag" name="tag" class="input" placeholder="separe por vírgula: fantasia, jovem, aventura" />
       </div>
       <div>
-        <label for="available">Disponível</label>
-        <select id="available" name="available" class="input">
-          <option value="yes">Sim</option>
-          <option value="no">Não</option>
+        <label for="disponivel">Disponível</label>
+        <select id="disponivel" name="disponivel" class="input">
+          <option value="True"{% if book and book.disponivel %} selected {% endif %}>Sim</option>
+          <option value="False" {% if book and not book.disponivel %} selected {% endif %}>Não</option>
         </select>
       </div>
     </div>
@@ -109,8 +109,8 @@
         </div>
         <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
           <label class="btn-upload" for="coverInput">Selecionar arquivo</label>
-          <span id="fileName" class="muted">Nenhum arquivo selecionado</span>
-          <input id="coverInput" type="file" accept="image/*" onchange="handleFile(event)" />
+          <span id="fileName"  class="muted">Nenhum arquivo selecionado</span>
+          <input id="coverInput" name="capa_livro" type="file" accept="image/*" onchange="handleFile(event)" />
         </div>
       </div>
     </div>
@@ -127,15 +127,15 @@
       <div class="muted" style="font-size:13px">Veja como ficará</div>
     </div>
 
-    <div id="previewCard" class="card-preview">
-      <div id="previewCover" class="cover">
-        <span id="previewPlaceholder">Imagem</span>
-        <img id="previewImg" src="" alt="Prévia da capa">
-      </div>
+    <div id="previewCover" class="cover">
+      <span id="previewPlaceholder">Imagem</span>
+      <img id="previewImg" src="" alt="Prévia da capa" style="display:none;">
+    </div>
+    
       <div class="meta">
         <h3 id="previewTitle">Título do livro</h3>
         <p id="previewAuthor" class="muted">Autor • Editora • Ano</p>
-        <p id="previewDesc" class="muted" style="margin-top:8px">
+        <p id="previewDesc" class="muted" style="margin-top:8px; text-align: justify;">
           Descrição curta do livro aparecerá aqui.
         </p>
       </div>

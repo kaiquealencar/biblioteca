@@ -1,6 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, flash, url_for, jsonify
 from .services import UserService
 from app.models import User
+
 usuario_bp = Blueprint("usuarios", __name__)
 
 @usuario_bp.route("/login", methods=["GET", "POST"])

@@ -16,12 +16,13 @@ class Book(db.Model):
     formato = db.Column(db.String(50), nullable=False)
     idioma = db.Column(db.String(50), nullable=False)
     descricao = db.Column(db.Text, nullable=False)
+    tag = db.Column(db.String(150), nullable=False)
     capa_livro = db.Column(db.String(255), nullable=False)
     disponivel = db.Column(db.Boolean, default=True, nullable=False)
     
     
     def __init__(self, titulo, autor, isbn, ano_pub, editora, paginas,
-                 genero, formato, idioma, descricao, capa_livro, disponivel=True):
+                 genero, formato, idioma, descricao, tag, capa_livro, disponivel=True):
         self.titulo = titulo
         self.autor = autor
         self.isbn = isbn
@@ -32,6 +33,7 @@ class Book(db.Model):
         self.formato = formato
         self.idioma = idioma
         self.descricao = descricao
+        self.tag = tag
         self.capa_livro = capa_livro
         self.disponivel = disponivel
 
