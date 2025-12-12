@@ -26,7 +26,6 @@ body {
   padding: 20px 0;
 }
 
-/* Containers genéricos */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -39,7 +38,6 @@ body {
   gap: 30px;
 }
 
-/* Header / logo */
 header {
   display: flex;
   align-items: center;
@@ -66,7 +64,6 @@ header h1 {
   color: #0f172a;
 }
 
-/* Inputs e formulários genéricos */
 input, textarea, select {
   width: 100%;
   padding: 12px 14px;
@@ -89,7 +86,6 @@ form {
   gap: 20px;
 }
 
-/* Botões globais */
 .btn {
   padding: 10px 16px;
   font-size: 14px;
@@ -119,7 +115,6 @@ form {
   background: #e2e8f0;
 }
 
-/* Botões específicos */
 .btn-editar {
   background: var(--primary);
   color: white;
@@ -138,7 +133,6 @@ form {
   background: #b91c1c;
 }
 
-/* Botão voltar canto */
 .btn-voltar-canto {
   position: absolute;
   top: 20px;
@@ -156,7 +150,6 @@ form {
   background-color: #5b21b6;
 }
 
-/* Responsivo */
 @media (max-width: 768px) {
   .container {
     padding: 20px;

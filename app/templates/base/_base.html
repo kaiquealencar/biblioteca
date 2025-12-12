@@ -6,11 +6,24 @@
   <title>{% block title %}Livraria{% endblock %}</title>
 
   {% block css_page %}{% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
 </head>
 <body class="{% block body_class %}{% endblock %}">
   {% if show_back_button %}
     <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
   {% endif %}
+
+   {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 
   {% block content %}{% endblock %}
 

@@ -1,28 +1,49 @@
 {% extends "base/_base.html" %}
 {% set show_back_button = False %}
 
-{% block title %}
-  Login
-{% endblock %}
-
-{% block header %}
-Login de usuário
+{% block title %}Login{% endblock %}
+{% block css_page %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 {% block content %}
-<form class="login-form" id="loginForm">
-  <h2>Login</h2>
-  <div class="full">
-    <label for="loginUser">Usuário</label>
-    <input type="text" id="loginUser" placeholder="Digite seu usuário">
-  </div>
-  <div class="full">
-    <label for="loginPassword">Senha</label>
-    <input type="password" id="loginPassword" placeholder="Digite sua senha">
-  </div>
-  <div class="actions">
-    <button type="submit" class="btn btn-primary">Logar</button>
-    <button type="button" class="btn btn-ghost">Sair</button>
-  </div>
-</form>
+<div class="page-login">
+
+    <div class="container">
+
+        <form class="login-form" method="POST" action="{{ url_for('usuarios.login') }}">
+
+            <h2>Entrar</h2>           
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input 
+                    type="text" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Digite seu e-mail"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input 
+                    type="password" 
+                    id="senha" 
+                    name="senha" 
+                    placeholder="Digite sua senha"
+                    required
+                >
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-primary">Entrar</button>
+                
+            </div>
+
+        </form>
+
+    </div>
+</div>
 {% endblock %}
