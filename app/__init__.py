@@ -17,7 +17,6 @@ def create_app(config_object= "config.Config"):
     from .auth.routes import usuario_bp
     app.register_blueprint(usuario_bp)
 
-    #from app.models import User
     
     db.init_app(app)
     migrate.init_app(app, db)

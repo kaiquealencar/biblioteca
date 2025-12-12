@@ -3,9 +3,15 @@ from .services import UserService
 from app.models import User
 usuario_bp = Blueprint("usuarios", __name__)
 
-
-@usuario_bp.route("/login")
+@usuario_bp.route("/login", methods=["GET", "POST"])
 def login():
+   if request.method == "POST":
+      email = request.form.get("email")
+      senha = request.form.get("senha")
+
+      flash("Login com sucesso!", "success")
+
+
    return render_template("auth/login.html")
 
 
@@ -52,5 +58,6 @@ def deletar_usuario(id):
    
    return redirect(url_for("usuarios.cadastrar_usuario"))
    
+
    
 

@@ -20,21 +20,10 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.flash-message.success {
-  background: #16a34a;
-}
-
-.flash-message.error {
-  background: #dc2626;
-}
-
-.flash-message.warning {
-  background: #f59e0b;
-}
-
-.flash-message.info {
-  background: #3b82f6;
-}
+.flash-message.success { background: #16a34a !important; }
+.flash-message.error   { background: #dc2626 !important; }
+.flash-message.warning { background: #f59e0b !important; }
+.flash-message.info    { background: #3b82f6 !important; }
 
 @keyframes fade-in-out {
   0%   { opacity: 0; transform: translateY(-10px); }
