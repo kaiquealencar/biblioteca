@@ -33,7 +33,7 @@ def cadastrar_livro():
 
         book = BookService.create(**book_data)
 
-        flash("Livro salvo com sucesso")
+        flash("Livro salvo com sucesso", "success")
         return redirect(url_for("livros.cadastrar_livro"))
     
     return render_template("livro/livro.html")
