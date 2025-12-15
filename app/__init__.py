@@ -17,6 +17,9 @@ def create_app(config_object= "config.Config"):
     from .auth.routes import usuario_bp
     app.register_blueprint(usuario_bp)
 
+    from .leitores.routes import reader_bp
+    app.register_blueprint(reader_bp)
+
     
     db.init_app(app)
     migrate.init_app(app, db)

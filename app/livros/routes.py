@@ -17,11 +17,11 @@ def cadastrar_livro():
         capa_livro = request.files.get("capa_livro")
 
         if capa_livro:
-            upload_path = "static/uploads"
+            upload_path = "static/uploads/capas"
             os.makedirs(upload_path, exist_ok=True)
             
             filename = secure_filename(capa_livro.filename)
-            capa_livro.save(f"static/uploads/{filename}")
+            capa_livro.save(f"static/uploads/capas/{filename}")
             data["capa_livro"] = filename
 
         data["disponivel"] = data.get("disponivel") == "True"
