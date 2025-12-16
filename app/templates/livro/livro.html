@@ -132,16 +132,33 @@
       <img id="previewImg" src="" alt="Prévia da capa" style="display:none;">
     </div>
     
-      <div class="meta">
-        <h3 id="previewTitle">Título do livro</h3>
-        <p id="previewAuthor" class="muted">Autor • Editora • Ano</p>
-        <p id="previewDesc" class="muted" style="margin-top:8px; text-align: justify;">
-          Descrição curta do livro aparecerá aqui.
-        </p>
-      </div>
+    <div class="meta">
+      <h3 id="previewTitle">Título do livro</h3>
+      <p id="previewAuthor" class="muted">Autor • Editora • Ano</p>
+      <p id="previewDesc" class="muted" style="margin-top:8px; text-align: justify;">
+        Descrição curta do livro aparecerá aqui.
+      </p>
     </div>
   </aside>
 </div>
-
 <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+<script src="{{ url_for('static', filename='js/livros.js') }}"></script>
+<script>
+  setupPreview('bookForm', 
+    {
+      titulo: 'previewTitle',
+      autor: 'previewAuthor',
+      editora: 'previewAuthor',   
+      ano_pub: 'previewAuthor',   
+      descricao: 'previewDesc'
+    },
+    {
+      titulo: 'Título do livro',
+      autor: 'Autor • Editora • Ano',
+      editora: '',
+      ano_pub: '',
+      descricao: 'Descrição curta do livro aparecerá aqui.'
+    }
+  );
+</script>
 {% endblock %}

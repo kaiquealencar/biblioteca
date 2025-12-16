@@ -9,11 +9,13 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
 </head>
 
+
 <body class="{% block body_class %}{% endblock %}">
 
   {% if show_back_button %}
     <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
   {% endif %}
+
 
 <div class="flash-container">
   {% with messages = get_flashed_messages(with_categories=true) %}

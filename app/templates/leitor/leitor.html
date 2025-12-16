@@ -116,7 +116,7 @@
     </div>
   </form>
 
-  <aside class="right">
+   <aside class="right">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <div style="font-weight:700">Pré-visualização</div>
       <div class="muted" style="font-size:13px">Veja como ficará</div>
@@ -127,13 +127,12 @@
       <img id="previewImg" src="" alt="Prévia da capa" style="display:none;">
     </div>
     
-      <div class="meta">
-        <h3 id="previewTitle">Nome</h3>
-        <p id="previewAuthor" class="muted">Autor • Editora • Ano</p>
-        <p id="previewDesc" class="muted" style="margin-top:8px; text-align: justify;">
-          
-        </p>
-      </div>
+    <div class="meta">
+      <h3 id="previewTitle">Nome do leitor</h3>
+      <p id="previewAuthor" class="muted">CPF • Data de nascimento</p>
+      <p id="previewDesc" class="muted" style="margin-top:8px; text-align: justify;">
+        Observações aparecerão aqui.
+      </p>
     </div>
   </aside>
 </div>
@@ -141,4 +140,18 @@
 <script src="{{ url_for('static', filename='js/base.js') }}"></script>
 <script src="{{ url_for('static', filename='js/cep.js') }}"></script>
 <script src="{{ url_for('static', filename='js/leitores.js') }}"></script>
+<script>
+  setupPreview('bookForm', 
+    {
+      nome: 'previewTitle',
+      cpf: 'previewAuthor',
+      observacao: 'previewDesc'
+    },
+    {
+      nome: 'Nome do leitor',
+      cpf: 'CPF • Data de nascimento',
+      observacao: 'Observações aparecerão aqui.'
+    }
+  );
+</script>
 {% endblock %}

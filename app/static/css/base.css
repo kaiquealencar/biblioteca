@@ -134,16 +134,20 @@ form {
 }
 
 .btn-voltar-canto {
-
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 1000;
-
+  z-index: 9999;
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
 }
-
 .btn-voltar-canto:hover {
-  background-color: #5b21b6;
+  background-color: #1d4ed8;
 }
 
 @media (max-width: 768px) {

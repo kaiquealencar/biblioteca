@@ -1,65 +1,59 @@
-const form = document.getElementById('bookForm');
-const previewTitle = document.getElementById('previewTitle');
-const previewAuthor = document.getElementById('previewAuthor');
-const previewDesc = document.getElementById('previewDesc');
-const previewCover = document.getElementById('previewCover');
-const previewImg = document.getElementById('previewImg');
-const previewPlaceholder = document.getElementById('previewPlaceholder');
-const fileName = document.getElementById('fileName');
+/**
+ * Cria um preview genérico para qualquer formulário
+ *
+ * @param {string} formId - ID do formulário
+ * @param {Object} fieldMap - Mapeamento dos campos do formulário para os elementos do preview
+ *   Ex: { titulo: 'previewTitle', autor: 'previewAuthor', descricao: 'previewDesc' }
+ * @param {Object} defaultValues - Valores padrão para o preview se o campo estiver vazio
+ */
+function setupPreview(formId, fieldMap, defaultValues = {}) {
+  const form = document.getElementById(formId);
+  if (!form) return;
 
-['titulo','autor','editora','ano_pub','descricao'].forEach(id => {
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', updatePreview);
-});
+  const previewElements = {};
+  for (const key in fieldMap) {
+    previewElements[key] = document.getElementById(fieldMap[key]);
+    const input = document.getElementById(key);
+    if (input) {
+      input.addEventListener('input', updatePreview);
+    }
+  }
 
-function updatePreview(){
-  const title = document.getElementById('titulo').value || 'Título do livro';
-  const author = document.getElementById('autor').value || '';
-  const publisher = document.getElementById('editora').value || '';
-  const year = document.getElementById('ano_pub').value || '';
-  previewTitle.textContent = title;
-  const parts = [author, publisher, year].filter(Boolean).join(' • ');
-  previewAuthor.textContent = parts || 'Autor • Editora • Ano';
-  const desc = document.getElementById('descricao').value || 'Descrição curta do livro aparecerá aqui.';
-  previewDesc.textContent = desc;
-}
+  function updatePreview() {
+    for (const key in previewElements) {
+      const input = document.getElementById(key);
+      const value = input ? input.value : '';
+      previewElements[key].textContent = value || (defaultValues[key] || '');
+    }
+  }
 
-function handleFile(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+  function resetPreview() {
+    for (const key in previewElements) {
+      previewElements[key].textContent = defaultValues[key] || '';
+    }
+  }
 
-  fileName.textContent = file.name;
+  const fileInputs = form.querySelectorAll('input[type="file"]');
+  fileInputs.forEach(fileInput => {
+    const fileNameEl = document.getElementById('fileName');
+    const previewImgEl = document.getElementById('previewImg');
+    const placeholderEl = document.getElementById('previewPlaceholder');
 
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    previewImg.src = ev.target.result;
-    previewImg.style.display = "block";
-    previewPlaceholder.style.display = "none";
-  };
-  reader.readAsDataURL(file);
-}
-
-function resetPreview(){
-  fileName.textContent = 'Nenhum arquivo selecionado';
-  previewImg.src = '';
-  previewImg.style.display = 'none';
-  previewPlaceholder.style.display = 'block';
-  previewTitle.textContent = 'Título do livro';
-  previewAuthor.textContent = 'Autor • Editora • Ano';
-  previewDesc.textContent = 'Descrição curta do livro aparecerá aqui.';
-}
-
-function handleSubmit(e){
-  e.preventDefault();
-  const data = new FormData(form);
-  const obj = {};
-  data.forEach((v,k) => {
-    obj[k] = v;
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      if(fileNameEl) fileNameEl.textContent = file.name;
+      if(previewImgEl && placeholderEl){
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          previewImgEl.src = ev.target.result;
+          previewImgEl.style.display = "block";
+          placeholderEl.style.display = "none";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   });
 
-  console.log('Dados do livro:', obj);
-  alert('Livro salvo (simulação). Abra o console para ver o objeto gerado.');
-  form.reset();
-  resetPreview();
+  return { updatePreview, resetPreview };
 }
