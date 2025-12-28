@@ -15,17 +15,18 @@
     </div>    
 
     <nav>
-      <a href="/">Início</a>
-      <a href="/livros">Livros</a>
-      <a href="{{url_for('livros.cadastrar_livro')}}">Cadastrar Livro</a>
-       <div class="dropdown" id="myDropdown">
-      <button class="dropbtn" onclick="toggleDropdown()">Cadastro &#9662;</button>
+      <div class="dropdown" id="myDropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">Cadastros &#9662;</button>
       <div class="dropdown-content">
         <a href="{{ url_for('usuarios.cadastrar_usuario') }}">Cadastrar Usuário</a>
         <a href="{{ url_for('livros.cadastrar_livro') }}">Cadastrar Livro</a>
         <a href="{{ url_for('leitores.cadastrar_leitores') }}">Cadastrar Leitores</a>
+      </div>
+    </div>
+    <div class="dropdown" id="myDropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">Consultas &#9662;</button>
+      <div class="dropdown-content">
         <a href="{{ url_for('leitores.ver_leitor') }}">Consultar Leitores</a>
-
       </div>
     </div>
     </nav>
