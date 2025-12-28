@@ -35,6 +35,14 @@ class ReaderService:
     
 
     @staticmethod
+    def get_by_id(id):  
+        return Reader.query.get(id) 
+    
+    @staticmethod
+    def get_all():
+        return Reader.query.all()   
+
+    @staticmethod
     def delete(id):
         reader = Reader.query.get(id)
 
