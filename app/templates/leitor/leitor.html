@@ -29,7 +29,7 @@
       </div>
       <div>
         <label for="data_nascimento">Data de Nascimento</label>
-        <input id="data_nascimento" name="data_nascimento" type="date" class="input" value="{{ leitor.data_nascimento.strftime('%Y-%m-%d') if leitor else '' }}"   required placeholder="Ex: 00/00/0000" />
+        <input id="data_nascimento" name="data_nascimento" type="date" class="input"  value={{leitor.data_nascimento.strftime('%Y-%m-%d') if leitor and leitor.data_nascimento else ''}}  required  />
       </div>
       <div>
         <label for="email">E-mail</label>
@@ -77,15 +77,15 @@
       </div>
       <div>
         <label for="observacao">Observação</label>
-        <textarea id="observacao" name="observacao" class="input" value="{{ leitor.observacao if leitor else '' }}" rows="4"placeholder="Digite observações adicionais..."></textarea>
+        <textarea id="observacao" name="observacao" class="input" rows="4" placeholder="Digite observações adicionais...">{{ leitor.observacao if leitor else '' }}</textarea>
       </div>
       <div>
         <label for="status">Status do leitor</label>
         <select id="status" name="status" class="input" value="{{ leitor.status if leitor else 'ativo' }}" required>
-          <option value="ativo" selected>Ativo</option>
-          <option value="bloqueado">Bloqueado</option>
-          <option value="suspenso">Suspenso</option>
-          <option value="inativo">Inativo</option>
+          <option value="ativo" {{ 'selected' if leitor and leitor.status == 'ativo' else '' }}>Ativo</option>
+          <option value="bloqueado" {{ 'selected' if leitor and leitor.status == 'bloqueado' else '' }}>Bloqueado</option>
+          <option value="suspenso" {{ 'selected' if leitor and leitor.status == 'suspenso' else '' }}>Suspenso</option>
+          <option value="inativo" {{ 'selected' if leitor and leitor.status == 'inativo' else '' }}>Inativo</option>
         </select>
       </div>
 
@@ -95,7 +95,7 @@
       </div>
       
     </div>
-
+    
     <div class="row full">
       <div class="file-input">
         <div>
@@ -105,7 +105,7 @@
         <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
           <label class="btn-upload" for="coverInput">Selecionar arquivo</label>
           <span id="fileName"  class="muted">Nenhum arquivo selecionado</span>
-          <input id="coverInput" name="foto" type="file" accept="image/*" onchange="handleFile(event)" value="{{ leitor.foto if leitor else '' }}" />
+          <input id="coverInput" name="foto" type="file" accept="image/*" onchange="handleFile(event)" />
         </div>
       </div>
     </div>
@@ -124,14 +124,18 @@
 
     <div id="previewCover" class="cover">
       <span id="previewPlaceholder">Imagem</span>
-      <img id="previewImg" src="" alt="Prévia da capa" style="display:none;">
+      <img
+      id="previewImg"
+      src="{% if leitor and leitor.foto %}{{ url_for('static', filename='uploads/leitores/' ~ leitor.foto) }}{% endif %}"
+      alt="Prévia da foto"
+      style="{% if leitor and leitor.foto %}display:block;{% else %}display:none;{% endif %}"
+      >
     </div>
-    
     <div class="meta">
-      <h3 id="previewTitle">Nome do leitor</h3>
-      <p id="previewAuthor" class="muted">CPF • Data de nascimento</p>
+      <h3 id="previewTitle">{{ leitor.nome if leitor else 'Nome do leitor' }}</h3>
+      <p id="previewAuthor" class="muted">{{ leitor.cpf if leitor else 'CPF • Data de nascimento' }} </p>
       <p id="previewDesc" class="muted" style="margin-top:8px; text-align: justify;">
-        Observações aparecerão aqui.
+        {{ leitor.observacao if leitor else 'Observações aparecerão aqui.' }} 
       </p>
     </div>
   </aside>

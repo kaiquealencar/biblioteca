@@ -35,14 +35,6 @@ class ReaderService:
     
 
     @staticmethod
-    def get_by_id(id):  
-        return Reader.query.get(id) 
-    
-    @staticmethod
-    def get_all():
-        return Reader.query.all()   
-
-    @staticmethod
     def delete(id):
         reader = Reader.query.get(id)
 
@@ -51,3 +43,17 @@ class ReaderService:
         
         db.session.delete(reader)
         db.session.commit()
+
+    
+    @staticmethod
+    def get_by_id(id):  
+        return Reader.query.get(id) 
+    
+    @staticmethod
+    def get_all():
+        return Reader.query.all()   
+    
+    @staticmethod
+    def get_by_cpf(cpf):
+        cpf_limpo = "".join(filter(str.isdigit, cpf))
+        return Reader.query.filter_by(cpf=cpf_limpo).first()

@@ -19,10 +19,14 @@ def cadastrar_leitores():
         if data.get("data_nascimento"):
             data["data_nascimento"] = datetime.strptime(
                 data["data_nascimento"], "%Y-%m-%d").date()
-
-
+            
+        
         if foto:
             data["foto"] = ServiceImage.salvar_image(foto, "leitores")
+
+        if ReaderService.get_by_cpf(data.get("cpf")):
+            flash("CPF já cadastrado", "error")
+            return redirect(url_for("leitores.cadastrar_leitores"))
 
         valid_fields = ["nome", "cpf", "data_nascimento", "email", "telefone", "cep",
                          "logradouro", "bairro", "cidade", "uf", "numero_endereco",
@@ -54,6 +58,15 @@ def deletar_leitor(id):
     flash("Leitor deletado com sucesso", "success")
     return redirect(url_for("leitores.listar_leitores"))
 
+@reader_bp.route("/leitores", methods=["GET"])
+def ver_leitor(): 
+    reader = ReaderService.get_all()
+    if not reader:
+        flash("Leitor não encontrado", "error")
+        return redirect(url_for("leitores.listar_leitores"))
+    
+    return render_template("leitor/ver_leitor.html", leitor=reader)
+
 @reader_bp.route("/leitores/<int:id>/edit", methods=["GET", "POST"])
 def editar_leitor(id):
     reader = ReaderService.get_by_id(id)
@@ -83,6 +96,6 @@ def editar_leitor(id):
         flash("Leitor atualizado com sucesso", "success")
         return redirect(url_for("leitores.listar_leitores"))
 
-    return render_template("leitor/leitor.html", reader=reader)
+    return render_template("leitor/leitor.html", leitor=reader)
     
                                   
