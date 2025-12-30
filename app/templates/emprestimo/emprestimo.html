@@ -1,0 +1,65 @@
+{% extends "base/_base.html" %}
+{% set show_back_button = True %}
+{% block body_class %}page-livro{% endblock %}
+
+{% block title %}Cadastro de Empréstimos{% endblock %}
+
+{% block css_page %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/leitor.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <header>
+    <div class="logo">LB</div>
+    <h1>Cadastro de Empréstimos</h1>
+  </header>
+
+  <form id="loanform" enctype="multipart/form-data" 
+        action="{% if emprestimo %}{{ url_for('emprestimos.editar_emprestimo', id=emprestimo.id) }}{% else %}{{ url_for('emprestimos.cadastrar_emprestimos') }}{% endif %}" 
+        method="POST">
+
+    <div class="row">
+      <div>
+        <label for="leitor_id">Leitor</label>
+        <select id="leitor_id" name="leitor_id" class="input" required>
+          <option value="" disabled selected>Selecione um leitor</option>
+          {% for leitor in leitores %}
+            <option value="{{ leitor.id }}" {% if emprestimo and emprestimo.leitor_id == leitor.id %}selected{% endif %}>
+              {{ leitor.nome }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="livro_id">Livro</label>
+        <select id="livro_id" name="livro_id" class="input" required>
+          <option value="" disabled selected>Selecione um livro</option>
+          {% for livro in livros %}
+            <option value="{{ livro.id }}" {% if emprestimo and emprestimo.livro_id == livro.id %}selected{% endif %}>
+              {{ livro.titulo }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="data_emprestimo">Data de Empréstimo</label>
+        <input id="data_emprestimo" name="data_emprestimo" type="date" class="input" 
+               value="{{ emprestimo.data_emprestimo.strftime('%Y-%m-%d') if emprestimo and emprestimo.data_emprestimo else '' }}" required />
+      </div>
+
+      <div>
+        <label for="data_devolucao">Data de Devolução</label>
+        <input id="data_devolucao" name="data_devolucao" type="date" class="input" 
+               value="{{ emprestimo.data_devolucao.strftime('%Y-%m-%d') if emprestimo and emprestimo.data_devolucao else '' }}" required />
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button type="submit" class="btn btn-primary">Salvar Empréstimo</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
