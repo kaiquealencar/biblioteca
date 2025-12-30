@@ -1,7 +1,7 @@
 from csv import reader
 import os 
 
-from flask import Blueprint, request, redirect, render_template, flash, url_for, jsonify
+from flask import Blueprint, request, redirect, render_template, flash, url_for, jsonify, session
 from werkzeug.utils import secure_filename
 
 from .service import ReaderService
@@ -43,10 +43,6 @@ def cadastrar_leitores():
 
     return render_template("leitor/leitor.html")
 
-@reader_bp.route("/leitores", methods=["GET"])
-def listar_leitores():
-    leitores = ReaderService.get_all()
-    return render_template("leitor/lista_leitores.html", leitores=leitores)
 
 @reader_bp.route("/leitores/<int:id>/delete", methods=["POST"])
 def deletar_leitor(id):
@@ -59,8 +55,13 @@ def deletar_leitor(id):
     return redirect(url_for("leitores.listar_leitores"))
 
 @reader_bp.route("/leitores", methods=["GET"])
+def listar_leitores():
+    leitores = ReaderService.get_all()
+    return render_template("leitor/lista_leitores.html", leitores=leitores)
+
+@reader_bp.route("/leitores", methods=["GET"])
 def ver_leitor(): 
-    reader = ReaderService.get_all()
+    reader = ReaderService.get_all()    
     if not reader:
         flash("Leitor não encontrado", "error")
         return redirect(url_for("leitores.listar_leitores"))
@@ -72,7 +73,7 @@ def editar_leitor(id):
     reader = ReaderService.get_by_id(id)
     if not reader:
         flash("Leitor não encontrado", "error")
-        return redirect(url_for("leitores.listar_leitores"))
+        return redirect(url_for("leitores.listar_leitores"))    
     
     if request.method == "POST":
         data = request.form.to_dict()

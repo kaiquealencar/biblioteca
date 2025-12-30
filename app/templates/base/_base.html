@@ -13,7 +13,7 @@
 <body class="{% block body_class %}{% endblock %}">
 
   {% if show_back_button %}
-    <a href="{{ url_for('main.index') }}" class="btn-voltar-canto">Voltar</a>
+    <a href="{{ session.get('back_url', url_for('index')) }}" class="btn-voltar-canto">Voltar</a>
   {% endif %}
 
 
