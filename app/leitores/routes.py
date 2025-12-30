@@ -4,6 +4,8 @@ import os
 from flask import Blueprint, request, redirect, render_template, flash, url_for, jsonify, session
 from werkzeug.utils import secure_filename
 
+from app import leitores
+
 from .service import ReaderService
 from app.service.arquivos_imagem import ServiceImage
 from datetime import datetime
@@ -54,20 +56,6 @@ def deletar_leitor(id):
     flash("Leitor deletado com sucesso", "success")
     return redirect(url_for("leitores.listar_leitores"))
 
-@reader_bp.route("/leitores", methods=["GET"])
-def listar_leitores():
-    leitores = ReaderService.get_all()
-    return render_template("leitor/lista_leitores.html", leitores=leitores)
-
-@reader_bp.route("/leitores", methods=["GET"])
-def ver_leitor(): 
-    reader = ReaderService.get_all()    
-    if not reader:
-        flash("Leitor não encontrado", "error")
-        return redirect(url_for("leitores.listar_leitores"))
-    
-    return render_template("leitor/ver_leitor.html", leitor=reader)
-
 @reader_bp.route("/leitores/<int:id>/edit", methods=["GET", "POST"])
 def editar_leitor(id):
     reader = ReaderService.get_by_id(id)
@@ -97,6 +85,11 @@ def editar_leitor(id):
         flash("Leitor atualizado com sucesso", "success")
         return redirect(url_for("leitores.listar_leitores"))
 
-    return render_template("leitor/leitor.html", leitor=reader)
+    return render_template("leitor/leitor.html", show_back_button=True, back_url= url_for('leitores.listar_leitores'), leitor=reader)
+                                      
+
+@reader_bp.route("/leitores", methods=["GET"])
+def listar_leitores(): 
+    lista_de_leitores = ReaderService.get_all()
     
-                                  
+    return render_template("leitor/lista_leitores.html", leitores=lista_de_leitores)
