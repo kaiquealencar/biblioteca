@@ -1,65 +1,114 @@
 {% extends "base/_base.html" %}
 {% set show_back_button = True %}
-{% block body_class %}page-livro{% endblock %}
+{% block body_class %}page-emprestimo{% endblock %}
 
 {% block title %}Cadastro de Empréstimos{% endblock %}
 
 {% block css_page %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/leitor.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/emprestimos.css') }}">
+<link href="{{url_for('static', filename='css/base.css')}}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="container">
+
   <header>
     <div class="logo">LB</div>
-    <h1>Cadastro de Empréstimos</h1>
+    <h1 style="text-align: center;">Cadastro de Empréstimos</h1>
   </header>
 
-  <form id="loanform" enctype="multipart/form-data" 
-        action="{% if emprestimo %}{{ url_for('emprestimos.editar_emprestimo', id=emprestimo.id) }}{% else %}{{ url_for('emprestimos.cadastrar_emprestimos') }}{% endif %}" 
-        method="POST">
+  <div class="container-emprestimo">
 
-    <div class="row">
-      <div>
-        <label for="leitor_id">Leitor</label>
-        <select id="leitor_id" name="leitor_id" class="input" required>
-          <option value="" disabled selected>Selecione um leitor</option>
-          {% for leitor in leitores %}
-            <option value="{{ leitor.id }}" {% if emprestimo and emprestimo.leitor_id == leitor.id %}selected{% endif %}>
-              {{ leitor.nome }}
-            </option>
-          {% endfor %}
-        </select>
+    <form class="form-emprestimo" method="post" action="{{ url_for('emprestimos.cadastrar_emprestimos') }}">
+
+      <div class="card">
+        <h2>Buscar Leitor</h2>
+
+        <label for="busca-leitor">Nome ou CPF</label>
+        <div style="display: flex; gap: 10px;">
+          <input
+            type="text"
+            id="busca-leitor"
+            name="busca-leitor"
+            placeholder="Digite o nome ou CPF do leitor"
+          >
+          <button type="button" class="btn" onclick="BuscaLeitor()">Buscar</button>
+        </div>
+    
+        <div id="resultado-busca-leitor" class="resultado">
+          <p>Aguardando busca...</p>
+        </div>
+      
+        <input type="hidden" name="leitor_id" id="leitor-id" value="">
+    </div>
+    <div class="card">
+          <h2>Buscar Livro</h2>
+
+        <label for="busca-livro">Título ou ISBN</label>
+        <div style="display: flex; gap: 10px;">
+          <input
+            type="text"
+            id="busca-livro"
+            name="busca-livro"
+            placeholder="Digite o título ou ISBN do livro"
+          >
+          <button type="button" class="btn" onclick="BuscaLivro()">Buscar</button>
+        </div>
+    
+        <div id="resultado-busca-livro" class="resultado">
+          <p>Aguardando busca...</p>
+        </div>
+      
+        <input type="hidden" name="livro_id" id="livro-id" value="">
+    </div>
+      
+    <div class="card card-full">
+      <h2>Dados do Empréstimo</h2>
+
+      <div class="linha">
+        <div>
+          <label for="data_emprestimo">Data do Empréstimo</label>
+          <input
+            type="date"
+            id="data_emprestimo"
+            name="data_emprestimo"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="data_devolucao">Data de Devolução</label>
+          <input
+            type="date"
+            id="data_devolucao"
+            name="data_devolucao"
+            required
+          >
+        </div>
       </div>
 
-      <div>
-        <label for="livro_id">Livro</label>
-        <select id="livro_id" name="livro_id" class="input" required>
-          <option value="" disabled selected>Selecione um livro</option>
-          {% for livro in livros %}
-            <option value="{{ livro.id }}" {% if emprestimo and emprestimo.livro_id == livro.id %}selected{% endif %}>
-              {{ livro.titulo }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
+      <label for="status">Status</label>
+      <select name="status" id="status">
+        <option value="ativo">Ativo</option>
+        <option value="devolvido">Devolvido</option>
+      </select>
 
-      <div>
-        <label for="data_emprestimo">Data de Empréstimo</label>
-        <input id="data_emprestimo" name="data_emprestimo" type="date" class="input" 
-               value="{{ emprestimo.data_emprestimo.strftime('%Y-%m-%d') if emprestimo and emprestimo.data_emprestimo else '' }}" required />
-      </div>
+      <label for="observacao">Observações</label>
+      <textarea
+        name="observacao"
+        id="observacao"
+        rows="3"
+        placeholder="Ex: prazo especial, estado do livro, observações pedagógicas"
+        ></textarea>
 
-      <div>
-        <label for="data_devolucao">Data de Devolução</label>
-        <input id="data_devolucao" name="data_devolucao" type="date" class="input" 
-               value="{{ emprestimo.data_devolucao.strftime('%Y-%m-%d') if emprestimo and emprestimo.data_devolucao else '' }}" required />
-      </div>
+      <button type="submit" class="btn btn-primary">
+        Registrar Empréstimo
+      </button>
     </div>
 
-    <div style="margin-top: 20px;">
-        <button type="submit" class="btn btn-primary">Salvar Empréstimo</button>
-    </div>
-  </form>
+</form>
+
+  </div>
 </div>
+<script src="{{ url_for('static', filename='js/emprestimos.js') }}"></script>
 {% endblock %}

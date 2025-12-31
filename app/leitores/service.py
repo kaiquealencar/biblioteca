@@ -10,6 +10,10 @@ class ReaderService:
         status = kwargs.get("status", "ativo")
         if status not in STATUS_VALIDOS:
             raise ValueError("Status Inválido")
+
+        if "numero_matricula" not in kwargs or not kwargs["numero_matricula"]:
+            kwargs["numero_matricula"] = ReaderService.gerador_numero_matricula()
+        
         
         reader = Reader(**kwargs)
         db.session.add(reader)
@@ -57,3 +61,17 @@ class ReaderService:
     def get_by_cpf(cpf):
         cpf_limpo = "".join(filter(str.isdigit, cpf))
         return Reader.query.filter_by(cpf=cpf_limpo).first()
+    
+    @staticmethod
+    def gerador_numero_matricula():
+        ultimo_leitor = Reader.query.order_by(Reader.id.desc()).first()
+        if ultimo_leitor:
+            try:
+                ultimo_numero = int(ultimo_leitor.numero_matricula)
+                novo_numero = f"{ultimo_numero + 1:06d}"
+            except ValueError:
+                novo_numero = "000001"
+        else:
+            novo_numero = "000001"
+        
+        return novo_numero

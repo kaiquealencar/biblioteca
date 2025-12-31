@@ -1,6 +1,7 @@
 from datetime import datetime
 from app.extensions import db
 from app.models import Loan, Book, Reader
+from sqlalchemy import or_
 
 class LoanService:
     
@@ -74,3 +75,29 @@ class LoanService:
     @staticmethod
     def get_all():
         return Loan.query.all()
+    
+    
+    
+    @staticmethod
+    def search(leitor_nome="", livro_titulo="", status=""):
+        query = db.session.query(Loan).outerjoin(Reader, Loan.leitor_id == Reader.id)\
+                                      .outerjoin(Book, Loan.livro_id == Book.id)
+        if leitor_nome and leitor_nome.strip():
+            query = query.filter(
+                or_(
+                    Reader.nome.ilike(f"%{leitor_nome}%"), 
+                    Reader.cpf.contains(leitor_nome)
+                )
+            )
+
+        if livro_titulo and livro_titulo.strip():
+            query = query.filter(
+                or_(
+                    Book.titulo.ilike(f"%{livro_titulo}%"), 
+                    Book.isbn.contains(livro_titulo)
+                )
+            )
+        if status and status.strip():
+            query = query.filter(Loan.status == status)
+
+        return query.order_by(Loan.id.desc()).all()

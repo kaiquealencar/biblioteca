@@ -1,5 +1,5 @@
 from csv import reader
-import os 
+import os, re
 
 from flask import Blueprint, request, redirect, render_template, flash, url_for, jsonify, session
 from werkzeug.utils import secure_filename
@@ -17,6 +17,8 @@ def cadastrar_leitores():
     if request.method == "POST":
         data = request.form.to_dict()
         foto = request.files.get("foto")
+        cpf_limpo = re.sub(r"\D", "", request.form.get("cpf", ""))
+        data["cpf"] = cpf_limpo
         
         if data.get("data_nascimento"):
             data["data_nascimento"] = datetime.strptime(

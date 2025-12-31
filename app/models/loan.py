@@ -7,7 +7,7 @@ class Loan(db.Model):
     __tablename__ = "loans"
     
     id = db.Column(db.Integer, primary_key=True)
-    leitor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    leitor_id = db.Column(db.Integer, db.ForeignKey('reader.id'), nullable=False)
     livro_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
     data_saida = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     data_prevista = db.Column(db.DateTime, nullable=False)
@@ -15,7 +15,7 @@ class Loan(db.Model):
     status = db.Column(db.String(50), nullable=False, default='pendente')
     multa_aplicada = db.Column(db.Float, default=0.0)
 
-    leitor = db.relationship('User', backref=db.backref('loans', lazy=True))
+    leitor = db.relationship('Reader', backref=db.backref('loans', lazy=True))
     livro = db.relationship('Book', backref=db.backref('loans', lazy=True)) 
 
     def __repr__(self):
