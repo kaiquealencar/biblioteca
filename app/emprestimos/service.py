@@ -1,3 +1,4 @@
+import pdb
 from datetime import datetime
 from app.extensions import db
 from app.models import Loan, Book, Reader
@@ -101,3 +102,50 @@ class LoanService:
             query = query.filter(Loan.status == status)
 
         return query.order_by(Loan.id.desc()).all()
+    
+    @staticmethod
+    def devolver_emprestimo(emprestimo_id):      
+        emprestimo = Loan.query.get(emprestimo_id)
+        if not emprestimo:
+            return None
+        
+        if emprestimo.status == "devolvido":
+            return emprestimo  
+        
+        emprestimo.status = "devolvido"
+        emprestimo.data_retorno = datetime.now()
+        
+        livro = Book.query.get(emprestimo.livro_id)
+        if livro:
+            livro.status = "disponivel"
+        
+        db.session.commit()
+        return emprestimo   
+    
+    @staticmethod
+    def calcular_multa(emprestimo_id, valor_multa_por_dia):
+        emprestimo = Loan.query.get(emprestimo_id)
+        if not emprestimo:
+            return None
+        
+        if emprestimo.status != "devolvido" or not emprestimo.data_retorno:
+            return emprestimo  
+        
+        dias_atraso = (emprestimo.data_retorno.date() - emprestimo.data_prevista.date()).days
+        if dias_atraso > 0:
+            multa_total = dias_atraso * valor_multa_por_dia
+            emprestimo.multa_aplicada = multa_total
+        else:
+            emprestimo.multa_aplicada = 0.0
+        
+        db.session.commit()
+        return emprestimo
+    
+    @staticmethod
+    def consultar_disponibilidade_livro(livro_id):
+        emprestimo_ativo = Loan.query.filter_by(livro_id=int(livro_id), status="pendente").first()
+
+        if emprestimo_ativo:
+            return False
+
+        return True

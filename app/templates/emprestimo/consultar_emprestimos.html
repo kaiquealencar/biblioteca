@@ -68,6 +68,11 @@
                 {{ emprestimo.status.upper() }}
               </span>
             </td>
+             <td class="text-center">
+                <form action="{{ url_for('emprestimos.devolver_emprestimo', emprestimo_id=emprestimo.id) }}" method="POST" style="display:inline;">
+                  <button type="submit" class="btn btn-sm btn-outline-danger" name="devolver_emprestimo" >Devolver</button>
+                </form>
+            </td>
             <td class="text-center">
                 <a href="#" class="btn btn-sm btn-outline-primary">Ver</a>
             </td>

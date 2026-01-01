@@ -15,9 +15,16 @@
     </div>    
 
     <nav>
-      <div>
+      <div class="dropdown" id="myDropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">Empréstimos &#9662;</button>        
+        <div class="dropdown-content">
         <a href="{{ url_for('emprestimos.cadastrar_emprestimos') }}">Emprestimos</a>
+        <a href="{{ url_for('emprestimos.consultar_emprestimos') }}">Consultar Empréstimos</a>
       </div>
+      </div>
+
+      
+
       <div class="dropdown" id="myDropdown">
         <button class="dropbtn" onclick="toggleDropdown()">Cadastros &#9662;</button>
       <div class="dropdown-content">

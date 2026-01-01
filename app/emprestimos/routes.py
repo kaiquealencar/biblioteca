@@ -1,5 +1,5 @@
 from csv import reader
-import os
+import os, pdb
 
 from flask import Blueprint, request, redirect, render_template, flash, url_for, jsonify, session
 from sqlalchemy import or_
@@ -18,11 +18,16 @@ def cadastrar_emprestimos():
     lista_leitores = Reader.query.all()
     lista_livros = Book.query.all() 
 
-    if request.method == "POST":
-        data = request.form.to_dict()
-        
+    if request.method == "POST":       
+        data = request.form.to_dict()    
+        livro_id = request.form.get('livro_id')
 
-        valid_fields = ["leitor_id", "livro_id", "data_emprestimo", "data_devolucao", "status", "observacao"]
+        if not LoanService.consultar_disponibilidade_livro(livro_id):
+            flash("Livro não disponível para empréstimo", "error")
+            return redirect(url_for("emprestimos.cadastrar_emprestimos"))
+                   
+        valid_fields = ["leitor_id", "livro_id", "data_emprestimo", "data_devolucao", "status", "observacao"]              
+
         emprestimo_data = {k: v for k, v in data.items() if k in valid_fields}
         emprestimo = LoanService.create(**emprestimo_data)  
         
@@ -85,4 +90,17 @@ def consultar_emprestimos():
 
 @loan_bp.route("/emprestimos", methods=["GET"])
 def listar_emprestimos():
-    return render_template("emprestimo/lista_emprestimos.html")     
+    return render_template("emprestimo/lista_emprestimos.html")    
+
+@loan_bp.route("/devolver-emprestimo/<int:emprestimo_id>", methods=["POST"])
+def devolver_emprestimo(emprestimo_id):
+    emprestimo = LoanService.get_by_id(emprestimo_id)
+    
+    if not emprestimo:
+        flash("Empréstimo não encontrado", "danger")
+        return redirect(url_for("emprestimos.consultar_emprestimos"))
+
+    LoanService.devolver_emprestimo(emprestimo_id)
+
+    flash("Empréstimo devolvido com sucesso", "success")
+    return redirect(url_for("emprestimos.consultar_emprestimos", emprestimo_id=emprestimo_id))    
