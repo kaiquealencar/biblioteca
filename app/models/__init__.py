@@ -6,3 +6,6 @@ __all__ = ["Book"]
 
 from .reader import Reader
 __all__ = ["Reader"]
+
+from .loan import Loan
+__all__ = ["Loan"]

@@ -20,6 +20,9 @@ def create_app(config_object= "config.Config"):
     from .leitores.routes import reader_bp
     app.register_blueprint(reader_bp)
 
+    from .emprestimos.routes import loan_bp
+    app.register_blueprint(loan_bp)
+
     
     db.init_app(app)
     migrate.init_app(app, db)

@@ -259,7 +259,7 @@ aside.right {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: #2563eb; /* mesma cor do sistema */
+  accent-color: #2563eb;
 }
 
 .checkbox-group label {
